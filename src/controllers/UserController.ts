@@ -1,12 +1,16 @@
 import { Request, Response } from 'express';
 import UserService from '../services/UserService';
 
-const UserController = async (request: Request, response: Response) => {
-  const { name, email, admin = false } = request.body;
+class UserController {
+  handle = async (request: Request, response: Response) => {
+    const { name, email, admin = false } = request.body;
 
-  const user = await UserService({ name, email, admin });
+    const service = new UserService();
 
-  return response.json(user);
-};
+    const user = await service.execute({ name, email, admin });
+
+    return response.json(user);
+  };
+}
 
 export default UserController;

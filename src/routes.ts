@@ -1,10 +1,14 @@
 import { Router } from 'express';
-import ConsultController from './controllers/ConsultController';
-import UserController from './controllers/UserController';
+
+import { UserController, TagController } from './controllers';
+import ensureAdmin from './middlewares/ensureAdmin';
 
 const router = Router();
 
-router.post('/users', UserController);
-router.get('/consult', ConsultController);
+const userController = new UserController();
+const tagController = new TagController();
+
+router.post('/users', userController.handle);
+router.post('/tags', ensureAdmin, tagController.handle);
 
 export { router };

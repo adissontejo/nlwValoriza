@@ -1,5 +1,6 @@
 import { getCustomRepository } from 'typeorm';
-import { UsersRepositories } from '../repositories/UsersRepositeries';
+
+import UsersRepositories from '../repositories/UsersRepositories';
 
 type Params = {
   name: string;
@@ -7,30 +8,30 @@ type Params = {
   admin?: boolean;
 };
 
-const UserService = async ({ name, email, admin }: Params) => {
-  const usersRepository = getCustomRepository(UsersRepositories);
+class UserService {
+  execute = async ({ name, email, admin }: Params) => {
+    const usersRepository = getCustomRepository(UsersRepositories);
 
-  if (!email) {
-    throw new Error('Email incorrect');
-  }
+    if (!email) {
+      throw new Error('Email incorrect');
+    }
 
-  const userAlreadyExists = await usersRepository.findOne({
-    email,
-  });
+    const userAlreadyExists = await usersRepository.findOne({ email });
 
-  if (userAlreadyExists) {
-    throw new Error('User already exists');
-  }
+    if (userAlreadyExists) {
+      throw new Error('User already exists');
+    }
 
-  const user = usersRepository.create({
-    name,
-    email,
-    admin,
-  });
+    const user = usersRepository.create({
+      name,
+      email,
+      admin,
+    });
 
-  await usersRepository.save(user);
+    await usersRepository.save(user);
 
-  return user;
-};
+    return user;
+  };
+}
 
 export default UserService;
