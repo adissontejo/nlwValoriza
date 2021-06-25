@@ -1,4 +1,3 @@
-
 # NLW Valoriza
 
 NLW Valoriza é um projeto que teve sua realização no evento Next Level Week e que visa conectar pessoas através de uma API de elogios, tomando como base a interação entre participantes e organizadores do evento.
@@ -7,9 +6,9 @@ NLW Valoriza é um projeto que teve sua realização no evento Next Level Week e
 
 Instale o projeto com:
 
-```bash 
-  git clone https://github.com/adissontejo/nlwValoriza
-  cd nlwValoriza
+```bash
+  $ git clone https://github.com/adissontejo/nlwValoriza
+  $ cd nlwValoriza
 ```
 
 ## Váriaveis de ambiente
@@ -22,24 +21,20 @@ Insira a porta em que você deseja rodar o projeto.
 
 `ANOTHER_API_KEY`
 
-Insira sua chave MD5 privada, que pode ser gerada no seguinte site: https://www.md5hashgenerator.com/
+Insira sua chave MD5 privada, que pode ser gerada no seguinte site: https://www.md5hashgenerator.com/ .
 
-
-  
 ## Rodando
 
 Para rodar o projeto, execute os seguintes passos:
 
 - Instale as dependências:
 
-    `$ yarn` ou `$ npm install`
+  `$ yarn` ou `$ npm install`
 
 - Gere seu banco de dados:
-    
-    `$ yarn typeorm migration:run` ou `$ npm run typeorm migration:run`
+
+  `$ yarn typeorm migration:run` ou `$ npm run typeorm migration:run`
 
 - Inicie o projeto:
 
-    `$ yarn dev` ou `$ npm run dev`
-
-  
+  `$ yarn dev` ou `$ npm run dev`
