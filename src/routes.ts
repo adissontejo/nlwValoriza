@@ -1,23 +1,50 @@
 import { Router } from 'express';
 
 import {
-  UserController,
-  TagController,
   AuthenticateUserController,
-  ComplimentController,
+  CreateComplimentController,
+  CreateTagController,
+  CreateUserController,
+  ListReceivedComplimentsController,
+  ListSentComplimentsController,
+  ListTagsController,
+  ListUsersController,
 } from './controllers';
-import ensureAdmin from './middlewares/ensureAdmin';
+import { ensureAdmin, ensureAuthenticated } from './middlewares';
 
 const router = Router();
 
-const userController = new UserController();
-const tagController = new TagController();
-const authenticateUserController = new AuthenticateUserController();
-const complimentController = new ComplimentController();
+const authenticateUser = new AuthenticateUserController();
+const createCompliment = new CreateComplimentController();
+const createTag = new CreateTagController();
+const createUser = new CreateUserController();
+const listReceivedCompliments = new ListReceivedComplimentsController();
+const listSentCompliments = new ListSentComplimentsController();
+const listTags = new ListTagsController();
+const listUsers = new ListUsersController();
 
-router.post('/users', userController.handle);
-router.post('/tags', ensureAdmin, tagController.handle);
-router.post('/login', authenticateUserController.handle);
-router.post('/compliments', complimentController.handle);
+router.post('/login', authenticateUser.handle);
+
+router.post('/compliments', ensureAuthenticated, createCompliment.handle);
+
+router.post('/tags', ensureAuthenticated, ensureAdmin, createTag.handle);
+
+router.post('/users', createUser.handle);
+
+router.get(
+  '/users/compliments/received',
+  ensureAuthenticated,
+  listReceivedCompliments.handle
+);
+
+router.get(
+  '/users/compliments/sent',
+  ensureAuthenticated,
+  listSentCompliments.handle
+);
+
+router.get('/tags', listTags.handle);
+
+router.get('/users', listUsers.handle);
 
 export default router;

@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
-import UsersRepositories from '../repositories/UsersRepositories';
+import { UsersRepository } from '../repositories';
 
 type Params = {
   name: string;
@@ -12,7 +12,7 @@ type Params = {
 
 class UserService {
   execute = async ({ name, email, admin, password }: Params) => {
-    const usersRepository = getCustomRepository(UsersRepositories);
+    const usersRepository = getCustomRepository(UsersRepository);
 
     if (!email) {
       throw new Error('Email incorrect');

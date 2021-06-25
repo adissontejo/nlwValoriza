@@ -1,10 +1,10 @@
 import { getCustomRepository } from 'typeorm';
 
-import TagsRepositories from '../repositories/TagsRepositories';
+import { TagsRepository } from '../repositories';
 
 class TagService {
   execute = async (name: string) => {
-    const tagsRepository = getCustomRepository(TagsRepositories);
+    const tagsRepository = getCustomRepository(TagsRepository);
 
     if (!name) {
       throw new Error('Incorrect name');

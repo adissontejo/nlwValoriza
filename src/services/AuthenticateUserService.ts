@@ -2,7 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import UsersRepositories from '../repositories/UsersRepositories';
+import { UsersRepository } from '../repositories';
 
 type Params = {
   email: string;
@@ -11,7 +11,7 @@ type Params = {
 
 class AuthenticateUserService {
   execute = async ({ email, password }: Params) => {
-    const userRepository = getCustomRepository(UsersRepositories);
+    const userRepository = getCustomRepository(UsersRepository);
 
     const user = await userRepository.findOne({ email });
 
@@ -25,7 +25,7 @@ class AuthenticateUserService {
       throw new Error('Email/Password incorrect');
     }
 
-    const token = sign({ email }, 'c8b67ce639db01901ae4576ad3058f41', {
+    const token = sign({ email }, process.env.PRIVATE_KEY, {
       subject: user.id,
       expiresIn: '1d',
     });
